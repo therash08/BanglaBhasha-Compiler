@@ -1,124 +1,299 @@
-# BanglaBhasha Compiler
+# 🇧🇩 BanglaBhasha Compiler
 
-A complete **toy compiler for an originally invented Bangla programming language**, implemented in Python.
+A custom **Bengali programming language compiler** built in Python.
 
-> **Project goal:** A user writes source code in BanglaBhasha. The compiler performs lexical analysis, parsing, semantic analysis, generates Three-Address Code (TAC), translates the program into executable Python code, and can then execute the generated Python.
+BanglaBhasha allows programmers to write source code using Bangla keywords and Unicode identifiers. The compiler processes the source through a complete compiler pipeline including **lexical analysis, parsing, semantic analysis, symbol-table management, Three-Address Code generation, Python code generation, and execution**.
+
+The project also includes an **interactive web-based compiler playground** where users can write BanglaBhasha code and visually inspect every stage of compilation.
 
 ---
 
-## 1. Compiler Pipeline
+## 🚀 Features
+
+### Compiler Features
+
+* ✅ Lexical Analysis
+* ✅ Token Generation
+* ✅ Recursive-Descent Parsing
+* ✅ Abstract Syntax Tree (AST)
+* ✅ Semantic Analysis
+* ✅ Symbol Table
+* ✅ Static Type Checking
+* ✅ Three-Address Code (TAC / IR)
+* ✅ Python Code Generation
+* ✅ Runtime Execution
+* ✅ Syntax Error Recovery
+* ✅ Semantic Error Reporting
+* ✅ Unicode Bangla Identifiers
+
+### Language Features
+
+* ✅ Integer, Float, Boolean and String types
+* ✅ Type-inferred variables
+* ✅ Arithmetic operations
+* ✅ Operator precedence
+* ✅ Comparison operators
+* ✅ Logical operators
+* ✅ `if-else`
+* ✅ `while`
+* ✅ `break`
+* ✅ Functions
+* ✅ Return statements
+* ✅ Classes
+* ✅ Objects
+* ✅ Member access
+* ✅ Method calls
+* ✅ Stack
+* ✅ Queue
+* ✅ List literals
+* ✅ Comments
+* ✅ Bangla variable and function names
+
+### Web Playground
+
+The project includes an interactive browser-based IDE with:
+
+* 📝 BanglaBhasha source-code editor
+* ▶️ Compile & Run controls
+* 🔍 Token viewer
+* 🌳 Interactive AST visualization
+* 📋 Symbol table viewer
+* ⚙️ TAC / Intermediate Representation viewer
+* 🐍 Generated Python viewer
+* 🖥️ Runtime output console
+* ⚠️ Compiler error display
+* 📚 Built-in sample programs
+* ⌨️ Bangla syntax quick-insert buttons
+* 🌗 Light/Dark theme
+
+---
+
+# 🧠 Compiler Pipeline
 
 ```text
-                 BanglaBhasha Source Code
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │    Lexer    │
-                    └──────┬──────┘
-                           │ Tokens
-                           ▼
-                    ┌─────────────┐
-                    │   Parser    │
-                    └──────┬──────┘
-                           │ AST
-                           ▼
-                 ┌───────────────────┐
-                 │ Semantic Analyzer │
-                 │   + Symbol Table  │
-                 └─────────┬─────────┘
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │     TAC     │
-                    │     / IR     │
-                    └──────┬──────┘
-                           │
-                           ▼
-                 ┌──────────────────┐
-                 │  Python Backend  │
-                 └────────┬─────────┘
-                          │
-                          ▼
-                    Generated .py
-                          │
-                          ▼
-                     Python exec()
-                          │
-                          ▼
-                        Output
+BanglaBhasha Source Code
+          │
+          ▼
+     ┌─────────┐
+     │  Lexer  │
+     └────┬────┘
+          │ Tokens
+          ▼
+     ┌─────────┐
+     │ Parser  │
+     └────┬────┘
+          │
+          ▼
+          AST
+          │
+          ▼
+ ┌───────────────────┐
+ │ Semantic Analyzer │
+ │   + Symbol Table  │
+ └─────────┬─────────┘
+           │
+           ▼
+     ┌───────────┐
+     │ TAC / IR  │
+     └─────┬─────┘
+           │
+           ▼
+ ┌─────────────────┐
+ │ Python Backend  │
+ └────────┬────────┘
+          │
+          ▼
+   Generated Python
+          │
+          ▼
+       Execution
+          │
+          ▼
+        Output
 ```
 
-The implementation is intentionally organized into compiler phases rather than performing simple Bangla-to-Python keyword replacement.
+BanglaBhasha is therefore more than a simple keyword translator. It is structured around the major phases commonly studied in **Compiler Design**.
 
 ---
 
-# 2. Project Structure
+# 📁 Project Structure
 
 ```text
-BanglaBhasha_Compiler_Project/
+BanglaBhasha-Compiler/
 │
 ├── bangla_compiler.py
+├── server.py
+├── run_demo.bat
 ├── BanglaBhasha_Compiler.ipynb
-└── README_BanglaBhasha.md
+├── generated_bangla.py
+├── README.md
+├── .gitignore
+│
+├── examples/
+│   ├── 01_sum_and_loops.bn
+│   ├── 02_factorial.bn
+│   ├── 03_fibonacci.bn
+│   ├── 04_student_oop.bn
+│   ├── 05_stack_and_queue.bn
+│   └── 06_prime_checker.bn
+│
+└── web/
+    ├── index.html
+    ├── app.js
+    └── style.css
 ```
 
 ### `bangla_compiler.py`
 
-The complete compiler in one Python source file.
+Core compiler implementation containing:
+
+* Lexer
+* Parser
+* AST definitions
+* Semantic analyzer
+* Symbol table
+* TAC generator
+* Python backend
+* Compiler API
+
+### `server.py`
+
+Zero-dependency local HTTP server used by the interactive web compiler.
+
+### `web/`
+
+Frontend of the interactive BanglaBhasha compiler playground.
 
 ### `BanglaBhasha_Compiler.ipynb`
 
-Google Colab/Jupyter version of the same compiler, divided into logical cells so that each compiler phase can be demonstrated separately.
+Jupyter / Google Colab version of the compiler for demonstration and academic presentation.
+
+### `examples/`
+
+Ready-to-run `.bn` BanglaBhasha programs.
 
 ---
 
-# 3. Implemented Compiler Features
+# ⚡ Quick Start
 
-## 3.1 Lexical Analysis
+## 1. Clone the Repository
 
-The lexer recognizes:
+```bash
+git clone https://github.com/therash08/BanglaBhasha-Compiler.git
+cd BanglaBhasha-Compiler
+```
 
-- Bangla/Unicode identifiers
-- Integer literals
-- Floating-point literals
-- String literals
-- Boolean literals
-- Arithmetic operators
-- Comparison operators
-- Logical operators
-- Assignment operator
-- Parentheses
-- Braces
-- Commas
-- Semicolons
-- Dot/member-access operator
-- Square brackets for list literals
-- `->` for function return-type syntax
-- New lines
+Python 3 is required.
 
-### Comments
+No third-party Python package is required for the core compiler or local web server.
 
-Both of these comment forms are recognized:
+---
+
+# 🌐 Run the Interactive Web Compiler
+
+Start the server:
+
+```bash
+python server.py
+```
+
+Then open:
 
 ```text
-// this is a comment
-# this is also a comment
+http://localhost:5000
+```
+
+You can now write BanglaBhasha code directly in the browser and inspect:
+
+```text
+Source
+  ↓
+Tokens
+  ↓
+AST
+  ↓
+Semantic Analysis
+  ↓
+Symbol Table
+  ↓
+TAC
+  ↓
+Generated Python
+  ↓
+Program Output
 ```
 
 ---
 
-# 4. Data Types
+## Windows Quick Start
 
-The language currently supports four explicitly declared data types.
+Windows users can simply run:
 
-| Bangla type | Internal type | Example |
-|---|---|---|
-| `পূর্ণসংখ্যা` | `int` | `পূর্ণসংখ্যা x = 10;` |
-| `দশমিক` | `float` | `দশমিক x = 3.14;` |
-| `বুলিয়ান` | `bool` | `বুলিয়ান ok = সত্য;` |
-| `স্ট্রিং` | `string` | `স্ট্রিং name = "Sahabi";` |
+```text
+run_demo.bat
+```
 
-The compiler also uses internal types such as:
+The script starts the compiler server and opens the playground in the browser.
+
+---
+
+# 🐍 Run the Compiler Directly
+
+You can also run:
+
+```bash
+python bangla_compiler.py
+```
+
+This executes the built-in demonstration program.
+
+---
+
+# 🇧🇩 BanglaBhasha Example
+
+```text
+পূর্ণসংখ্যা x = 10;
+দশমিক y = 2.5;
+স্ট্রিং নাম = "BanglaBhasha";
+বুলিয়ান চালু = সত্য;
+
+যদি (x > 5 এবং চালু) {
+    লেখো(নাম);
+    লেখো(x + 5);
+} নাহলে {
+    লেখো("শর্ত মিথ্যা");
+}
+```
+
+Equivalent generated Python is approximately:
+
+```python
+x = 10
+y = 2.5
+নাম = "BanglaBhasha"
+চালু = True
+
+if x > 5 and চালু:
+    print(নাম)
+    print(x + 5)
+else:
+    print("শর্ত মিথ্যা")
+```
+
+---
+
+# 📦 Data Types
+
+BanglaBhasha currently supports four explicitly declared primitive types.
+
+| Bangla Type   | Internal Type | Example                   |
+| ------------- | ------------- | ------------------------- |
+| `পূর্ণসংখ্যা` | `int`         | `পূর্ণসংখ্যা x = 10;`     |
+| `দশমিক`       | `float`       | `দশমিক x = 3.14;`         |
+| `বুলিয়ান`     | `bool`        | `বুলিয়ান ok = সত্য;`      |
+| `স্ট্রিং`     | `string`      | `স্ট্রিং name = "বাংলা";` |
+
+The compiler also uses internal semantic categories including:
 
 ```text
 list
@@ -129,24 +304,22 @@ any
 error
 ```
 
-These are internal semantic categories rather than additional explicit primitive declarations.
-
 ---
 
-# 5. Variable Declaration
+# 📌 Variable Declaration
 
-## Explicit declaration
+## Explicit Type
 
 ```text
 পূর্ণসংখ্যা বয়স = 22;
 দশমিক উচ্চতা = 5.8;
 বুলিয়ান ছাত্র = সত্য;
-স্ট্রিং নাম = "Sahabi";
+স্ট্রিং নাম = "Rahim";
 ```
 
-## Declaration without an initializer
+---
 
-Typed variables can be declared without an initial value:
+## Declaration Without Initial Value
 
 ```text
 পূর্ণসংখ্যা x;
@@ -155,7 +328,7 @@ Typed variables can be declared without an initial value:
 স্ট্রিং text;
 ```
 
-They receive these default values:
+Default values:
 
 ```text
 পূর্ণসংখ্যা → 0
@@ -164,16 +337,25 @@ They receive these default values:
 স্ট্রিং → ""
 ```
 
-## Type-inferred declaration
+---
 
-`ধরি` requires an initial value:
+## Type Inference
+
+Use:
+
+```text
+ধরি
+```
+
+Example:
 
 ```text
 ধরি x = 100;
-ধরি name = "Bangla";
+ধরি নাম = "বাংলা";
+ধরি numbers = [1, 2, 3];
 ```
 
-This declaration infers the type from the expression.
+The compiler infers the variable type from the expression.
 
 This is invalid:
 
@@ -181,50 +363,39 @@ This is invalid:
 ধরি x;
 ```
 
-because `ধরি` requires an initial value.
+because a type-inferred declaration requires an initial value.
 
 ---
 
-# 6. Assignment
-
-After a variable has been declared, assignment can be written as:
+# ✏️ Assignment
 
 ```text
+পূর্ণসংখ্যা x = 10;
+
 x = 20;
-name = "BanglaBhasha";
 ```
 
-The semantic analyzer checks assignments against an existing variable type.
+The semantic analyzer checks whether the assigned value is compatible with the variable type.
 
-An integer can be assigned to a float variable:
-
-```text
-দশমিক x = 10;
-```
-
-because the compiler treats:
-
-```text
-int → float
-```
-
-as a compatible widening conversion.
-
-Other incompatible assignments generate a semantic error.
-
-Example:
+For example:
 
 ```text
 পূর্ণসংখ্যা x = "hello";
 ```
 
-produces a type-mismatch error.
+produces a semantic type error.
+
+The compiler permits integer-to-float widening:
+
+```text
+দশমিক x = 10;
+```
 
 ---
 
-# 7. Output
+# 🖨️ Output
 
-The output statement is:
+BanglaBhasha uses:
 
 ```text
 লেখো(expression);
@@ -235,17 +406,21 @@ Examples:
 ```text
 লেখো(10);
 লেখো(x);
-লেখো("Hello");
+লেখো("Hello BanglaBhasha");
 লেখো(x + 5);
 ```
 
-It is translated to Python `print(...)`.
+This is translated into Python:
+
+```python
+print(...)
+```
 
 ---
 
-# 8. Arithmetic Operators
+# ➕ Arithmetic Operators
 
-Supported arithmetic operators:
+Supported operators:
 
 ```text
 +
@@ -255,53 +430,52 @@ Supported arithmetic operators:
 %
 ```
 
-The parser implements operator precedence.
+Example:
 
-The precedence structure is:
+```text
+পূর্ণসংখ্যা x = 2 + 3 * 4;
+```
+
+Operator precedence means it is interpreted as:
+
+```text
+2 + (3 * 4)
+```
+
+---
+
+# ⚙️ Operator Precedence
 
 ```text
 OR
  ↓
 AND
  ↓
-Equality: == !=
+Equality
+== !=
  ↓
-Comparison: < <= > >=
+Comparison
+< <= > >=
  ↓
-Term: + -
+Addition / Subtraction
++ -
  ↓
-Factor: * / %
+Multiplication / Division / Modulo
+* / %
  ↓
-Unary: - !
+Unary
+- !
  ↓
-Postfix: function call / member access
+Function / Method Call
  ↓
-Primary: literal / variable / new / list / (...)
-```
-
-Therefore:
-
-```text
-পূর্ণসংখ্যা x = 2 + 3 * 4;
-```
-
-is interpreted as:
-
-```text
-2 + (3 * 4)
-```
-
-not:
-
-```text
-(2 + 3) * 4
+Primary Expression
 ```
 
 ---
 
-# 9. Comparison Operators
+# 🔎 Comparison Operators
 
-Supported comparisons:
+Supported comparison operators:
 
 ```text
 ==
@@ -312,8 +486,6 @@ Supported comparisons:
 >=
 ```
 
-Comparison expressions produce a boolean result.
-
 Example:
 
 ```text
@@ -322,9 +494,11 @@ Example:
 }
 ```
 
+Comparison expressions evaluate to Boolean values.
+
 ---
 
-# 10. Boolean Values and Logical Operators
+# 🔘 Boolean Values
 
 Boolean literals:
 
@@ -341,8 +515,6 @@ Logical operators:
 নয়
 ```
 
-The symbolic form `!` is also recognized as logical NOT. The lexer also recognizes `&&` and `||`, but the current semantic/backend pipeline does not treat those two symbolic forms as supported source-language operators, so use `এবং` and `অথবা` in valid programs.
-
 Example:
 
 ```text
@@ -354,11 +526,9 @@ Example:
 }
 ```
 
-Boolean conditions are required for `যদি` and `যতক্ষণ`.
-
 ---
 
-# 11. IF-ELSE
+# 🔀 IF-ELSE
 
 Syntax:
 
@@ -382,11 +552,9 @@ Example:
 }
 ```
 
-The generated Python uses normal Python `if/else` statements.
-
 ---
 
-# 12. WHILE Loop
+# 🔄 WHILE Loop
 
 Syntax:
 
@@ -407,19 +575,15 @@ Example:
 }
 ```
 
-The generated Python contains an equivalent `while` loop.
-
 ---
 
-# 13. Break
+# 🛑 Break
 
-The keyword:
+Use:
 
 ```text
 থামো;
 ```
-
-is translated to Python `break`.
 
 Example:
 
@@ -427,21 +591,22 @@ Example:
 পূর্ণসংখ্যা i = 0;
 
 যতক্ষণ (i < 10) {
+
     যদি (i == 5) {
         থামো;
     }
+
     লেখো(i);
+
     i = i + 1;
 }
 ```
 
-The semantic analyzer reports an error if `থামো` is used outside a loop.
+Using `থামো` outside a loop generates a semantic error.
 
 ---
 
-# 14. Functions
-
-Functions can have typed or untyped parameters.
+# 🧩 Functions
 
 Syntax:
 
@@ -461,7 +626,7 @@ Example:
 লেখো(যোগ(10, 20));
 ```
 
-A function may also omit the return type:
+Functions may also omit an explicit return type:
 
 ```text
 ফাংশন greet(স্ট্রিং name) {
@@ -469,44 +634,41 @@ A function may also omit the return type:
 }
 ```
 
-The function is translated into a Python `def`.
+---
 
-### Return
+# ↩️ Return
+
+Return a value:
 
 ```text
 ফেরত expression;
 ```
 
-or:
+Example:
+
+```text
+ফেরত a + b;
+```
+
+Or return without a value:
 
 ```text
 ফেরত;
 ```
 
-The semantic analyzer checks a declared function return type against the returned expression.
+The semantic analyzer checks declared function return types.
 
 ---
 
-# 15. Classes and Objects
+# 🏛️ Classes and Objects
 
-The compiler supports a basic toy class system.
-
-Syntax:
-
-```text
-ক্লাস ClassName {
-    field declarations
-
-    ফাংশন methodName(নিজে, parameters) {
-        statements
-    }
-}
-```
+BanglaBhasha includes a simple object-oriented programming system.
 
 Example:
 
 ```text
 ক্লাস ব্যক্তি {
+
     স্ট্রিং নাম = "অজানা";
 
     ফাংশন নাম_সেট(নিজে, স্ট্রিং নতুননাম) {
@@ -519,76 +681,64 @@ Example:
 }
 ```
 
-Object creation:
+Create an object:
 
 ```text
 ব্যক্তি১ = নতুন ব্যক্তি();
 ```
 
-Method call:
+Call methods:
 
 ```text
-ব্যক্তি১.নাম_সেট("Sahabi");
+ব্যক্তি১.নাম_সেট("Rahim");
 ব্যক্তি১.পরিচয়();
 ```
 
-### `নিজে`
+---
 
-Inside a method, the Bangla keyword:
+## `নিজে`
+
+Inside methods:
 
 ```text
 নিজে
 ```
 
-maps to Python's conventional:
+corresponds conceptually to Python's:
 
-```text
+```python
 self
-```
-
-### Current class scope
-
-This is intentionally a simple toy OOP system.
-
-Currently supported:
-
-- Class declaration
-- Class fields
-- Methods
-- `নিজে`
-- Object creation with `নতুন`
-- Member access
-- Method calls
-- Member assignment
-
-Currently **not** implemented:
-
-- Inheritance
-- Constructors such as `__init__`
-- Access modifiers
-- Method overloading
-- Interfaces
-- Static methods
-
-Therefore object creation should currently be written without constructor arguments:
-
-```text
-p = নতুন ব্যক্তি();
-```
-
-rather than:
-
-```text
-p = নতুন ব্যক্তি("Sahabi");
 ```
 
 ---
 
-# 16. Stack
+## Current OOP Support
 
-A built-in stack class is included in the generated Python runtime.
+Supported:
 
-Declaration:
+* Class declaration
+* Fields
+* Methods
+* Object creation
+* Member access
+* Member assignment
+* Method calls
+* `নিজে`
+
+Not currently implemented:
+
+* Inheritance
+* Constructor arguments
+* Access modifiers
+* Interfaces
+* Method overloading
+* Static methods
+
+---
+
+# 📚 Stack
+
+Declare a stack:
 
 ```text
 স্ট্যাক s;
@@ -616,21 +766,18 @@ s.ঠেলো(200);
 লেখো(s.বের_করো());
 ```
 
-The stack follows LIFO behavior:
+The stack follows:
 
 ```text
+LIFO
 Last In → First Out
 ```
 
-An empty `বের_করো()` or `সামনে_দেখো()` returns `None` rather than crashing.
-
 ---
 
-# 17. Queue
+# 📥 Queue
 
-A built-in queue class is included in the generated Python runtime.
-
-Declaration:
+Declare a queue:
 
 ```text
 কিউ q;
@@ -658,78 +805,94 @@ q.ঢোকাও("B");
 লেখো(q.বের_করো_কিউ());
 ```
 
-The queue follows FIFO behavior:
+The queue follows:
 
 ```text
+FIFO
 First In → First Out
 ```
 
-An empty dequeue/front operation returns `None`.
+---
+
+# 📋 Lists
+
+List literals are supported.
+
+```text
+ধরি numbers = [10, 20, 30];
+
+লেখো(numbers);
+```
+
+General list indexing and list mutation syntax are not currently implemented.
 
 ---
 
-# 18. Lists
+# 🔤 Unicode Identifiers
 
-List literals are supported:
+Bangla identifiers can be used directly.
+
+Example:
 
 ```text
-[1, 2, 3]
+পূর্ণসংখ্যা বয়স = 20;
+পূর্ণসংখ্যা সংখ্যা = 100;
+স্ট্রিং নাম = "বাংলাভাষা";
+```
+
+The lexer supports Unicode letters, combining marks, numbers and underscores.
+
+---
+
+# 💬 Comments
+
+Two comment styles are supported.
+
+```text
+// comment
+```
+
+and:
+
+```text
+# comment
 ```
 
 Example:
 
 ```text
-ধরি numbers = [10, 20, 30];
-লেখো(numbers);
-```
+# একটি সংখ্যা তৈরি করছি
+পূর্ণসংখ্যা x = 10;
 
-The current compiler supports list literal creation and output, but it does **not** implement general list indexing or list-specific language keywords.
+// ফলাফল দেখাও
+লেখো(x);
+```
 
 ---
 
-# 19. Identifiers
+# 🔚 Statement Termination
 
-Bangla/Unicode identifiers are supported.
-
-Examples:
-
-```text
-পূর্ণসংখ্যা বয়স = 20;
-পূর্ণসংখ্যা সংখ্যা = 100;
-স্ট্রিং নাম = "Sahabi";
-```
-
-The lexer accepts Unicode letters, combining marks, Unicode numbers, and `_` as identifier characters.
-
-Python 3 also supports Unicode identifiers, allowing many Bangla names to remain unchanged in generated Python.
-
----
-
-# 20. Statement Termination
-
-A normal statement may end with:
+Statements may be terminated using:
 
 ```text
 ;
 ```
 
-or a newline.
-
-Examples:
+Example:
 
 ```text
 পূর্ণসংখ্যা x = 10;
 লেখো(x);
 ```
 
-Newline termination is also accepted:
+Newlines are also supported in many normal statement contexts:
 
 ```text
 পূর্ণসংখ্যা x = 10
 লেখো(x)
 ```
 
-A block is enclosed by:
+Blocks use braces:
 
 ```text
 {
@@ -739,13 +902,11 @@ A block is enclosed by:
 
 ---
 
-# 21. Error Handling
+# ⚠️ Error Handling
 
-The compiler is designed to report errors instead of allowing compiler-stage exceptions to terminate the whole compilation unexpectedly.
+The compiler attempts to produce understandable compiler errors instead of crashing unexpectedly.
 
-## Lexical errors
-
-Example:
+### Lexical Error
 
 ```text
 পূর্ণসংখ্যা x = 10 @ 5;
@@ -753,21 +914,15 @@ Example:
 
 The lexer reports the unknown character.
 
-## Syntax errors
-
-Example:
+### Syntax Error
 
 ```text
 পূর্ণসংখ্যা x = ;
 ```
 
-The parser reports the unexpected token.
+The parser reports an unexpected token.
 
-The parser has basic error recovery: after a syntax problem it attempts to synchronize at a semicolon, newline, closing brace, or end of file.
-
-## Semantic errors
-
-Example:
+### Semantic Error
 
 ```text
 পূর্ণসংখ্যা x = "hello";
@@ -775,29 +930,27 @@ Example:
 
 The semantic analyzer reports a type mismatch.
 
-Another example:
+Undefined variables are also detected:
 
 ```text
 লেখো(y);
 ```
 
-if `y` has not been defined.
-
-The compiler does not generate target Python when lexical, syntax, or semantic errors remain.
+If compilation contains errors, target Python code is not executed normally.
 
 ---
 
-# 22. Three-Address Code (TAC)
+# ⚙️ Three-Address Code
 
-The compiler contains an intermediate representation based on Three-Address Code.
+BanglaBhasha generates an intermediate representation based on **Three-Address Code**.
 
-Example source:
+Example:
 
 ```text
 পূর্ণসংখ্যা x = 2 + 3 * 4;
 ```
 
-is represented conceptually as:
+Conceptually becomes:
 
 ```text
 t0 = 3 * 4
@@ -805,36 +958,29 @@ t1 = 2 + t0
 x = t1
 ```
 
-The TAC generator also represents:
+The TAC generator represents operations including:
 
-- assignments
-- arithmetic operations
-- unary operations
-- conditional jumps
-- labels
-- loops
-- function calls
-- returns
-- functions
-- classes
-- object creation
-- stack/queue creation
-- method calls
-- break
-
-TAC can be displayed with:
-
-```python
-print_tac(result.tac)
-```
+* Assignments
+* Arithmetic
+* Unary operations
+* Conditional jumps
+* Labels
+* Loops
+* Function calls
+* Returns
+* Classes
+* Object creation
+* Stack / Queue operations
+* Method calls
+* Break statements
 
 ---
 
-# 23. Generated Python
+# 🐍 Python Code Generation
 
-The Python backend converts the validated AST into Python source code.
+After successful semantic analysis, the compiler converts the AST into executable Python.
 
-Example BanglaBhasha:
+BanglaBhasha:
 
 ```text
 পূর্ণসংখ্যা x = 10;
@@ -844,7 +990,7 @@ Example BanglaBhasha:
 }
 ```
 
-is generated approximately as:
+Generated Python:
 
 ```python
 x = 10
@@ -853,185 +999,40 @@ if x > 5:
     print(x)
 ```
 
-The actual generated file also contains the runtime definitions needed for the built-in BanglaBhasha stack and queue.
-
 ---
 
-# 24. Compiler API
+# 🔌 Compiler API
 
-The main user-facing functions are:
-
-```python
-compile_source(source)
-```
-
-Compile source code and return a `CompilationResult`.
-
-```python
-run_source(source)
-```
-
-Compile and execute the source.
-
-It returns:
-
-```text
-(result, output)
-```
-
-```python
-save_python(source, filename="generated_bangla.py")
-```
-
-Compile the source and save generated Python if compilation succeeds.
-
-```python
-show_pipeline(source)
-```
-
-Display:
-
-```text
-Tokens
-AST
-Semantic Analysis
-TAC
-Generated Python
-```
-
----
-
-# 25. Compilation Result
-
-`CompilationResult` stores:
-
-```text
-source
-tokens
-ast
-semantic
-tac
-python_code
-errors
-warnings
-```
-
-Compilation succeeds when:
-
-```python
-result.success
-```
-
-is `True`.
-
-Otherwise:
-
-```python
-result.errors
-```
-
-contains the compiler errors.
-
----
-
-# 26. Complete Example
-
-```text
-পূর্ণসংখ্যা x = 10;
-দশমিক y = 2.5;
-স্ট্রিং নাম = "BanglaBhasha";
-বুলিয়ান চালু = সত্য;
-
-ফাংশন যোগ(পূর্ণসংখ্যা a, পূর্ণসংখ্যা b) -> পূর্ণসংখ্যা {
-    ফেরত a + b;
-}
-
-যদি (x > 5 এবং চালু) {
-    লেখো(নাম);
-    লেখো(যোগ(x, 5));
-} নাহলে {
-    লেখো("শর্ত মিথ্যা");
-}
-
-যতক্ষণ (x < 13) {
-    লেখো(x);
-    x = x + 1;
-}
-
-স্ট্যাক s;
-s.ঠেলো(100);
-s.ঠেলো(200);
-
-লেখো(s.সামনে_দেখো());
-লেখো(s.বের_করো());
-
-কিউ q;
-q.ঢোকাও("A");
-q.ঢোকাও("B");
-
-লেখো(q.সামনে_দেখো_কিউ());
-লেখো(q.বের_করো_কিউ());
-
-ক্লাস ব্যক্তি {
-    স্ট্রিং নাম = "অজানা";
-
-    ফাংশন নাম_সেট(নিজে, স্ট্রিং নতুননাম) {
-        নিজে.নাম = নতুননাম;
-    }
-
-    ফাংশন পরিচয়(নিজে) {
-        লেখো(নিজে.নাম);
-    }
-}
-
-ব্যক্তি১ = নতুন ব্যক্তি();
-ব্যক্তি১.নাম_সেট("বাংলা প্রোগ্রামার");
-ব্যক্তি১.পরিচয়();
-```
-
----
-
-# 27. Running in Google Colab
-
-1. Open Google Colab.
-2. Upload:
-
-```text
-BanglaBhasha_Compiler.ipynb
-```
-
-3. Run the cells from top to bottom.
-4. Modify `DEMO_SOURCE` with your own BanglaBhasha program.
-5. Run the compile/run cell.
-
-The notebook also contains small regression tests for:
-
-- arithmetic precedence
-- type checking
-- boolean conditions
-- while loops
-- functions
-- classes
-- type errors
-
-No third-party Python package is required.
-
----
-
-# 28. Running as a Python File
-
-With Python 3 installed:
-
-```bash
-python bangla_compiler.py
-```
-
-The file contains a built-in demonstration program.
-
-You can also use the compiler from another Python program:
+The compiler can also be imported from another Python program.
 
 ```python
 from bangla_compiler import compile_source, run_source
+```
+
+---
+
+## `compile_source`
+
+```python
+result = compile_source(source)
+```
+
+Compiles BanglaBhasha source and returns a `CompilationResult`.
+
+---
+
+## `run_source`
+
+```python
+result, output = run_source(source)
+```
+
+Compiles and executes the source code.
+
+Example:
+
+```python
+from bangla_compiler import run_source
 
 source = """
 পূর্ণসংখ্যা x = 10;
@@ -1048,69 +1049,166 @@ else:
 
 ---
 
-# 29. Language Keyword Reference
+## `save_python`
 
-| Keyword | Meaning |
-|---|---|
-| `ধরি` | type-inferred variable declaration |
-| `পূর্ণসংখ্যা` | integer type |
-| `দশমিক` | floating-point type |
-| `বুলিয়ান` | boolean type |
-| `স্ট্রিং` | string type |
-| `লেখো` | print |
-| `যদি` | if |
-| `নাহলে` | else |
-| `যতক্ষণ` | while |
-| `থামো` | break |
-| `ফাংশন` | function |
-| `ফেরত` | return |
-| `ক্লাস` | class |
-| `নতুন` | object creation |
-| `নিজে` | method self reference |
-| `সত্য` | true |
-| `মিথ্যা` | false |
-| `স্ট্যাক` | stack declaration |
-| `কিউ` | queue declaration |
-| `ঠেলো` | stack push |
-| `বের_করো` | stack pop |
-| `সামনে_দেখো` | stack peek |
-| `ঢোকাও` | queue enqueue |
-| `বের_করো_কিউ` | queue dequeue |
-| `সামনে_দেখো_কিউ` | queue front |
-| `এবং` | logical AND |
-| `অথবা` | logical OR |
-| `নয়` | logical NOT |
+```python
+save_python(source, filename="generated_bangla.py")
+```
+
+Compiles the BanglaBhasha program and saves generated Python code.
 
 ---
 
-# 30. Current Scope and Deliberate Limitations
+## `show_pipeline`
 
-This is a **toy compiler for a Compiler Design course**, not a production programming language.
+```python
+show_pipeline(source)
+```
 
-The current implementation does not provide:
+Displays compiler stages including:
 
-- inheritance
-- constructors with arguments
-- access modifiers
-- exception syntax in Bangla
-- for loops
-- switch/case
-- general list indexing
-- list mutation syntax
-- modules/imports
-- a full standard library
-- static method support
-- method overloading
-- full function-argument type checking
-- a separate machine-code/runtime implementation
-
-These are suitable candidates for future versions rather than requirements of the current implementation.
+```text
+Tokens
+AST
+Semantic Analysis
+TAC
+Generated Python
+```
 
 ---
 
-# 31. Design Rationale
+# 📊 Compilation Result
 
-The project is deliberately structured around classical compiler concepts:
+A compilation result can contain:
+
+```text
+source
+tokens
+ast
+semantic
+tac
+python_code
+errors
+warnings
+```
+
+Check compilation success:
+
+```python
+result.success
+```
+
+Compiler errors are available through:
+
+```python
+result.errors
+```
+
+---
+
+# 🧪 Example Programs
+
+The repository contains several ready-made BanglaBhasha programs.
+
+| File                    | Demonstrates                            |
+| ----------------------- | --------------------------------------- |
+| `01_sum_and_loops.bn`   | Variables, arithmetic and loops         |
+| `02_factorial.bn`       | Factorial calculation                   |
+| `03_fibonacci.bn`       | Fibonacci sequence                      |
+| `04_student_oop.bn`     | Classes and object-oriented programming |
+| `05_stack_and_queue.bn` | Stack and Queue data structures         |
+| `06_prime_checker.bn`   | Prime-number checking                   |
+
+These files can be used for testing, classroom demonstrations and project presentations.
+
+---
+
+# 📓 Google Colab / Jupyter Notebook
+
+The repository includes:
+
+```text
+BanglaBhasha_Compiler.ipynb
+```
+
+To use it:
+
+1. Open Google Colab or Jupyter Notebook.
+2. Upload/open the notebook.
+3. Run the cells from top to bottom.
+4. Modify the demo BanglaBhasha source.
+5. Run the compiler.
+
+The notebook is useful for explaining individual compiler phases during an academic presentation.
+
+---
+
+# 🔑 Language Keyword Reference
+
+| Bangla Keyword   | Meaning                |
+| ---------------- | ---------------------- |
+| `ধরি`            | Type-inferred variable |
+| `পূর্ণসংখ্যা`    | Integer                |
+| `দশমিক`          | Float                  |
+| `বুলিয়ান`        | Boolean                |
+| `স্ট্রিং`        | String                 |
+| `লেখো`           | Print                  |
+| `যদি`            | If                     |
+| `নাহলে`          | Else                   |
+| `যতক্ষণ`         | While                  |
+| `থামো`           | Break                  |
+| `ফাংশন`          | Function               |
+| `ফেরত`           | Return                 |
+| `ক্লাস`          | Class                  |
+| `নতুন`           | New object             |
+| `নিজে`           | Self reference         |
+| `সত্য`           | True                   |
+| `মিথ্যা`         | False                  |
+| `স্ট্যাক`        | Stack                  |
+| `কিউ`            | Queue                  |
+| `ঠেলো`           | Stack push             |
+| `বের_করো`        | Stack pop              |
+| `সামনে_দেখো`     | Stack peek             |
+| `ঢোকাও`          | Queue enqueue          |
+| `বের_করো_কিউ`    | Queue dequeue          |
+| `সামনে_দেখো_কিউ` | Queue front            |
+| `এবং`            | Logical AND            |
+| `অথবা`           | Logical OR             |
+| `নয়`             | Logical NOT            |
+
+---
+
+# 📌 Current Limitations
+
+BanglaBhasha is currently an academic / educational compiler rather than a production programming language.
+
+Features not currently implemented include:
+
+* `for` loops
+* `switch/case`
+* inheritance
+* constructor arguments
+* access modifiers
+* interfaces
+* method overloading
+* static methods
+* modules/import system
+* exception syntax
+* general list indexing
+* advanced list mutation
+* full standard library
+* native machine-code generation
+* dedicated virtual machine/runtime
+
+These provide possible directions for future development.
+
+---
+
+# 🎓 Academic Purpose
+
+BanglaBhasha was designed as a **Compiler Design project** to demonstrate the classical phases of compiler construction using an original Bangla-based programming language.
+
+The project demonstrates:
 
 ```text
 Lexical Analysis
@@ -1121,6 +1219,8 @@ Abstract Syntax Tree
        ↓
 Semantic Analysis
        ↓
+Symbol Table
+       ↓
 Intermediate Representation
        ↓
 Target Code Generation
@@ -1128,121 +1228,120 @@ Target Code Generation
 Execution
 ```
 
-This makes the project demonstrable as a **compiler construction project**, rather than only as a translator.
-
-The Bangla syntax is the user-facing language layer; Python is the target language.
+Python is currently used as the target language.
 
 ---
 
-# 32. Suggested Demonstration Order
+# 🗺️ Possible Future Improvements
 
-For a project presentation/demo, a practical sequence is:
+Possible future versions could include:
 
-### Demo 1 — Basic program
-
-```text
-পূর্ণসংখ্যা x = 10;
-লেখো(x + 5);
-```
-
-Show:
-
-```text
-Bangla Source
-      ↓
-Tokens
-      ↓
-AST
-      ↓
-TAC
-      ↓
-Generated Python
-      ↓
-15
-```
-
-### Demo 2 — Type checking
-
-```text
-পূর্ণসংখ্যা x = "hello";
-```
-
-Show the semantic error.
-
-### Demo 3 — IF-ELSE
-
-```text
-যদি (x > 5) {
-    লেখো("YES");
-} নাহলে {
-    লেখো("NO");
-}
-```
-
-### Demo 4 — WHILE
-
-Show a loop printing several values.
-
-### Demo 5 — Function
-
-Show:
-
-```text
-ফাংশন যোগ(...) -> পূর্ণসংখ্যা
-```
-
-and the generated Python `def`.
-
-### Demo 6 — Advanced feature
-
-Show either:
-
-```text
-স্ট্যাক
-```
-
-or:
-
-```text
-ক্লাস + অবজেক্ট
-```
-
-This gives the audience a clear progression from the required compiler features to the advanced features.
+* `for` loop support
+* Array / list indexing
+* User-defined constructors
+* Inheritance
+* Exception handling
+* Module system
+* Standard library
+* More advanced static type checking
+* Optimized TAC
+* Compiler optimization passes
+* Bytecode backend
+* Virtual machine
+* Command-line compiler
+* Package manager
+* Syntax highlighting
+* Online deployment of the web playground
 
 ---
 
-# 33. Project Status
+# ✅ Project Status
 
-### Minimum compiler requirements
+### Core Compiler
 
-- [x] Multiple data types
-- [x] Type checking
-- [x] Arithmetic operations
-- [x] Operator precedence
-- [x] Assignment
-- [x] IF-ELSE
-- [x] WHILE
-- [x] Syntax error recovery
-- [x] Graceful compiler errors
-- [x] Executable Python target generation
+* [x] Lexer
+* [x] Parser
+* [x] AST
+* [x] Semantic analysis
+* [x] Symbol table
+* [x] Type checking
+* [x] TAC generation
+* [x] Python backend
+* [x] Runtime execution
+* [x] Error handling
 
-### Advanced features
+### Language
 
-- [x] Functions
-- [x] Return statements
-- [x] Classes
-- [x] Objects
-- [x] Stack
-- [x] Queue
-- [x] Boolean operators
-- [x] Lists
-- [x] Break
-- [x] Bangla Unicode identifiers
-- [x] Comments
+* [x] Multiple primitive types
+* [x] Variables
+* [x] Type inference
+* [x] Arithmetic
+* [x] Comparisons
+* [x] Logical operators
+* [x] IF-ELSE
+* [x] WHILE
+* [x] Break
+* [x] Functions
+* [x] Return
+* [x] Classes
+* [x] Objects
+* [x] Stack
+* [x] Queue
+* [x] Lists
+* [x] Comments
+* [x] Unicode identifiers
+
+### Development Tools
+
+* [x] Python compiler
+* [x] Jupyter / Colab notebook
+* [x] Interactive Web IDE
+* [x] AST visualization
+* [x] Symbol-table viewer
+* [x] TAC viewer
+* [x] Generated Python viewer
+* [x] Example programs
 
 ---
 
-# 34. License / Academic Use
+# 🤝 Contributing
 
-This project is intended as an academic Compiler Design project.
+Contributions, improvements and suggestions are welcome.
 
+You can:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Implement your improvement.
+4. Test the compiler.
+5. Submit a Pull Request.
+
+Example:
+
+```bash
+git checkout -b feature/new-feature
+git commit -m "Add new BanglaBhasha feature"
+git push origin feature/new-feature
+```
+
+---
+
+# 📄 License / Academic Use
+
+This repository is currently intended primarily for educational and academic use.
+
+If the project is going to be distributed or reused publicly, adding a dedicated `LICENSE` file such as the **MIT License** is recommended.
+
+---
+
+# 👨‍💻 Repository
+
+**BanglaBhasha Compiler**
+
+https://github.com/therash08/BanglaBhasha-Compiler
+
+---
+
+<p align="center">
+  🇧🇩 <b>Programming concepts in Bangla — from source code to compiler pipeline.</b>
+</p>
