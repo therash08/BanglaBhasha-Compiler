@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বাংলাভাষা কম্পাইলার — লাইভ প্লেগ্রাউন্ড ও ওয়েব IDE</title>
+  <meta name="description" content="বাংলা প্রোগ্রামিং ভাষা 'বাংলাভাষা'র লাইভ ইন্টারেক্টিভ ওয়েব কম্পাইলার ও প্লেগ্রাউন্ড। বাংলা কোড লিখুন, কম্পাইলার পাইপলাইন ভিজ্যুয়ালাইজ করুন ও এক্সিকিউট করুন।">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- TOP NAVIGATION / HEADER -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="logo-icon">🇧🇩</div>
+        <div class="brand-text">
+          <div class="brand-title-wrap">
+            <h1 class="brand-title">বাংলাভাষা</h1>
+            <span class="compiler-badge">কম্পাইলার v1.0</span>
+          </div>
+          <p class="brand-subtitle">BanglaBhasha Toy Compiler — Interactive Web Playground</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="example-selector-wrap">
+          <label for="exampleSelect" class="selector-label">উদাহরণ বাছুন:</label>
+          <select id="exampleSelect" class="custom-select">
+            <option value="full_demo">🚀 সম্পূর্ণ ডেমো (Full Demo)</option>
+            <option value="math_functions">🧮 ফাংশন ও গণিত (Functions & Math)</option>
+            <option value="loops_and_conditionals">🔄 শর্ত ও লুপ (If-Else & Loops)</option>
+            <option value="data_structures">📚 স্ট্যাক ও কিউ (Stack & Queue)</option>
+            <option value="oop_classes">🏛️ অবজেক্ট ও ক্লাস (OOP & Class)</option>
+            <option value="type_error_demo">⚠️ সিম্যান্টিক এরর (Type Error Demo)</option>
+          </select>
+        </div>
+
+        <div class="header-buttons">
+          <button id="btnThemeToggle" class="btn btn-theme" title="দিন / রাত মোড পরিবর্তন করুন">
+            <span id="themeIcon">☀️</span> <span id="themeText">দিন মোড</span>
+          </button>
+          <button id="btnCheatsheet" class="btn btn-secondary" title="বাংলা সিনট্যাক্স গাইড দেখুন">
+            📖 চিটশিট
+          </button>
+          <button id="btnCompile" class="btn btn-outline" title="শুধু কম্পাইল করে পাইপলাইন দেখুন">
+            ⚡ কম্পাইল
+          </button>
+          <button id="btnRun" class="btn btn-primary" title="কোড কম্পাইল ও এক্সিকিউট করুন (Ctrl + Enter)">
+            <span class="btn-icon">▶</span> চালাও (Run)
+            <span class="btn-kbd">Ctrl+↵</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="workspace-grid">
+      <!-- LEFT PANE: CODE EDITOR -->
+      <section class="editor-pane">
+        <div class="pane-header">
+          <div class="pane-title">
+            <span class="dot live-dot"></span>
+            <span>সোর্স কোড এডিটর (BanglaBhasha)</span>
+          </div>
+          <div class="editor-actions">
+            <button id="btnClear" class="btn-icon-text" title="কোড মুছুন">🧹 মুছুন</button>
+            <button id="btnReset" class="btn-icon-text" title="প্রাথমিক কোডে ফিরুন">↺ রিসেট</button>
+          </div>
+        </div>
+
+        <!-- QUICK INSERT VIRTUAL BANGLA KEYBOARD -->
+        <div class="quick-keys-toolbar">
+          <div class="quick-keys-label">কুইক কি-বোর্ড:</div>
+          <div class="chips-container" id="chipsContainer">
+            <!-- Chips injected via JS -->
+          </div>
+        </div>
+
+        <!-- EDITOR WRAPPER -->
+        <div class="editor-body">
+          <div class="line-numbers" id="lineNumbers">1</div>
+          <textarea id="codeEditor" spellcheck="false" placeholder="বাংলায় কোড লিখুন... যেমন: পূর্ণসংখ্যা x = ১০; লেখো(x);"></textarea>
+        </div>
+
+        <!-- EDITOR STATUS BAR -->
+        <div class="editor-status-bar">
+          <div class="status-left">
+            <span id="cursorPos">লাইন ১, কলাম ১</span>
+            <span class="sep">•</span>
+            <span id="charCount">০ অক্ষর</span>
+          </div>
+          <div class="status-right">
+            <span class="status-tag">UTF-8 বাংলা</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANE: COMPILER PIPELINE INSPECTOR -->
+      <section class="inspector-pane">
+        <div class="inspector-tabs-header">
+          <button class="tab-btn active" data-tab="tab-output">
+            <span class="tab-icon">🖥️</span> আউটপুট
+          </button>
+          <button class="tab-btn" data-tab="tab-tokens">
+            <span class="tab-icon">🔍</span> টোকেন (<span id="tokenCount">০</span>)
+          </button>
+          <button class="tab-btn" data-tab="tab-ast">
+            <span class="tab-icon">🌳</span> সিনট্যাক্স ট্রি (AST)
+          </button>
+          <button class="tab-btn" data-tab="tab-semantic">
+            <span class="tab-icon">📋</span> সিম্বল টেবিল
+          </button>
+          <button class="tab-btn" data-tab="tab-tac">
+            <span class="tab-icon">⚙️</span> TAC / IR
+          </button>
+          <button class="tab-btn" data-tab="tab-python">
+            <span class="tab-icon">🐍</span> পাইথন কোড
+          </button>
+        </div>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <div class="inspector-content">
+          <!-- ERROR ALERT BANNER -->
+          <div id="errorAlert" class="error-alert hidden">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+              <div class="alert-title">কম্পাইলেশন / রানটাইম ত্রুটি</div>
+              <ul id="errorList" class="error-list"></ul>
+            </div>
+          </div>
+
+          <!-- TAB 1: TERMINAL OUTPUT -->
+          <div id="tab-output" class="tab-pane active">
+            <div class="terminal-container">
+              <div class="terminal-bar">
+                <div class="term-dots">
+                  <span class="t-dot red"></span>
+                  <span class="t-dot yellow"></span>
+                  <span class="t-dot green"></span>
+                </div>
+                <div class="term-title">কনসোল আউটপুট (Terminal Output)</div>
+                <div class="term-meta" id="termMeta">
+                  <span class="time-badge hidden" id="timeBadge">⚡ 0 ms</span>
+                </div>
+              </div>
+              <div class="terminal-output" id="terminalOutput">
+                <div class="empty-state">
+                  <div class="empty-icon">▶</div>
+                  <div class="empty-text">কোড রান করতে উপরের <strong>'চালাও (Run)'</strong> বাটনে ক্লিক করুন অথবা <strong>Ctrl + Enter</strong> চাপুন।</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: TOKENS -->
+          <div id="tab-tokens" class="tab-pane">
+            <div class="pane-inner-header">
+              <div class="filter-wrap">
+                <input type="text" id="tokenFilter" class="filter-input" placeholder="টোকেন খুঁজুন (যেমন: TYPE_INT, IDENT)...">
+              </div>
+              <div class="info-pill" id="tokenMetaPill">মোট ০টি টোকেন</div>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="tokensTable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>টোকেনের ধরন (Kind)</th>
+                    <th>লেক্সিম (Lexeme)</th>
+                    <th>লাইন</th>
+                    <th>কলাম</th>
+                    <th>ভ্যালু</th>
+                  </tr>
+                </thead>
+                <tbody id="tokensTableBody">
+                  <tr><td colspan="6" class="text-center text-muted">কম্পাইল করার পর টোকেনসমূহ এখানে দৃশ্যমান হবে।</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 3: AST (ABSTRACT SYNTAX TREE) -->
+          <div id="tab-ast" class="tab-pane">
+            <div class="pane-inner-header">
+              <div class="ast-controls">
+                <button id="btnAstTreeView" class="btn-toggle active">ভিজ্যুয়াল ট্রি</button>
+                <button id="btnAstTextView" class="btn-toggle">টেক্সট ভিউ</button>
+              </div>
+              <div class="info-pill">পার্সার আউটপুট (AST)</div>
+            </div>
+            <div id="astTreeContainer" class="ast-tree-view">
+              <div class="empty-state text-muted">সিনট্যাক্স ট্রি দেখতে কোড কম্পাইল করুন।</div>
+            </div>
+            <pre id="astTextContainer" class="code-view hidden"></pre>
+          </div>
+
+          <!-- TAB 4: SEMANTIC ANALYSIS & SYMBOL TABLE -->
+          <div id="tab-semantic" class="tab-pane">
+            <div class="semantic-grid">
+              <div class="semantic-box">
+                <h3 class="box-title">🏷️ ভেরিয়েবল সিম্বল টেবিল (Symbols)</h3>
+                <div class="table-container">
+                  <table class="data-table" id="symbolsTable">
+                    <thead>
+                      <tr>
+                        <th>ভেরিয়েবল নাম</th>
+                        <th>টাইপ (Type)</th>
+                        <th>স্কোপ (Scope)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="symbolsTableBody">
+                      <tr><td colspan="3" class="text-center text-muted">কোনো সিম্বল পাওয়া যায়নি।</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="semantic-box">
+                <h3 class="box-title">⚡ ডিক্লেয়ার্ড ফাংশন ও ক্লাস</h3>
+                <div id="functionsClassesContainer" class="fn-class-list">
+                  <div class="text-muted text-center p-2">কোনো ফাংশন বা ক্লাস ডিফাইন করা হয়নি।</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: THREE-ADDRESS CODE (TAC) -->
+          <div id="tab-tac" class="tab-pane">
+            <div class="pane-inner-header">
+              <span class="info-pill">ইন্টারমিডিয়েট কোড (TAC / IR)</span>
+            </div>
+            <div class="tac-container" id="tacContainer">
+              <div class="empty-state text-muted">কম্পাইল করার পর থ্রি-অ্যাড্রেস কোড এখানে দেখা যাবে।</div>
+            </div>
+          </div>
+
+          <!-- TAB 6: GENERATED PYTHON -->
+          <div id="tab-python" class="tab-pane">
+            <div class="pane-inner-header">
+              <span class="info-pill">পাইথন ব্যাকএন্ড কোড</span>
+              <button id="btnCopyPython" class="btn btn-sm btn-outline">📋 কোড কপি করুন</button>
+            </div>
+            <pre id="pythonCodeView" class="code-view text-python"># কোড কম্পাইল করার পর জেনারেটেড পাইথন কোড এখানে আসবে</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- CHEATSHEET MODAL -->
+    <div id="cheatsheetModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">📖 বাংলাভাষা সিনট্যাক্স চিটশিট (Syntax Quick Reference)</h2>
+          <button id="btnCloseModal" class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="cheatsheet-grid">
+            <div class="cheat-col">
+              <h3>১. ডেটা টাইপ ও ভেরিয়েবল</h3>
+              <pre><code>পূর্ণসংখ্যা x = 10;
+দশমিক y = 3.14;
+স্ট্রিং নাম = "বাংলাদেশ";
+বুলিয়ান সত্য_কিনা = সত্য; // অথবা মিথ্যা
+ধরি বয়স = 25; // টাইপ ইনফারেন্স</code></pre>
+
+              <h3>২. শর্ত ও ব্রাঞ্চিং (If - Else)</h3>
+              <pre><code>যদি (x > 5 এবং সত্য_কিনা) {
+    লেখো("ঠিক আছে");
+} নাহলে {
+    লেখো("ভুল");
+}</code></pre>
+
+              <h3>৩. লুপ (While Loop)</h3>
+              <pre><code>যতক্ষণ (x < 15) {
+    লেখো(x);
+    x = x + 1;
+    যদি (x == 12) { থামো; } // break
+}</code></pre>
+            </div>
+
+            <div class="cheat-col">
+              <h3>৪. ফাংশন (Functions)</h3>
+              <pre><code>ফাংশন যোগফল(পূর্ণসংখ্যা a, পূর্ণসংখ্যা b) -> পূর্ণসংখ্যা {
+    ফেরত a + b;
+}
+লেখো(যোগফল(10, 20));</code></pre>
+
+              <h3>৫. স্ট্যাক ও কিউ (Stack & Queue)</h3>
+              <pre><code>স্ট্যাক s;
+s.ঠেলো(100);
+লেখো(s.সামনে_দেখো()); // 100
+লেখো(s.বের_করো());   // 100
+
+কিউ q;
+q.ঢোকাও("A");
+লেখো(q.বের_করো_কিউ()); // A</code></pre>
+
+              <h3>৬. ক্লাস ও অবজেক্ট (OOP)</h3>
+              <pre><code>ক্লাস ছাত্র {
+    স্ট্রিং নাম = "অজানা";
+    ফাংশন নাম_সেট(নিজে, স্ট্রিং নতুননাম) {
+        নিজে.নাম = নতুননাম;
+    }
+}
+সাকিব = নতুন ছাত্র();
+সাকিব.নাম_সেট("সাকিব আল হাসান");</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
